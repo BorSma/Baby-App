@@ -1,23 +1,22 @@
-import React, { useContext } from "react";
-import { BrowserRouter as Router } from "react-router-dom";
+import React from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 import { createBrowserHistory } from "history";
 import Body from "./Components/Body";
 import styled from "styled-components";
-import { BabyAppContext } from "./Context/BabyAppContext";
 
 require("dotenv").config();
 
+// random comment some change
 const App = () => {
-  const { username } = useContext(BabyAppContext);
   const historyInstance = createBrowserHistory();
   return (
     <>
       <Router history={historyInstance}>
         <Wrapper>
           <Header />
-          {username.id !== null ? <Body /> : <p> You're not logged in!</p>}
+          <Body />
           <Footer />
         </Wrapper>
       </Router>
@@ -25,9 +24,7 @@ const App = () => {
   );
 };
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
+
+const Wrapper = styled.div``;
 
 export default App;

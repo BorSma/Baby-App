@@ -3,14 +3,14 @@ require("dotenv").config();
 ("use strict");
 
 const express = require("express");
+const axios = require("axios");
 const bodyParser = require("body-parser");
-const { OAuth2Client } = require("google-auth-library");
-const client = new OAuth2Client(process.env.CLIENT_ID);
+const session = require("express-session");
+
 const morgan = require("morgan");
 
 const PORT = 8000;
 const handlers = require("./handlers");
-
 express()
   .use(function (req, res, next) {
     res.header(
@@ -25,30 +25,29 @@ express()
   })
   .use(morgan("tiny"))
   .use(bodyParser.json())
+  .use(
+    session({
+      secret: "keyboard cat",
+      resave: false,
+      saveUninitialized: true,
+      cookie: { secure: true },
+    })
+  )
 
-  .get("/", (req, res) => res.status(200).json("🥓"))
+  .use(
+    "/api/v1/auth/google",
+    handlers.authorizeGoogle,
+    handlers.isAuthenticated,
+    handlers.userInfo
+  )
+  .get("/me", handlers.isAuthenticated, handlers.userInfo)
+  .post("/populategallery", handlers.isAuthenticated, handlers.getPhotos)
+  .post("/populategallerynextpage", handlers.isAuthenticated, handlers.getPhotosNextPage)
 
-  .post("/api/v1/auth/google", async (req, res) => {
-    try {
-      const { token } = req.body;
-      const ticket = await client.verifyIdToken({
-        idToken: token,
-        audience: process.env.CLIENT_ID,
-      });
-      const { name, email, picture } = ticket.getPayload();
-      // const user = await db.user.upsert({
-      //   where: { email: email },
-      //   update: { name, picture },
-      //   create: { name, email, picture },
-      // });
-      console.log(ticket.getPayload());
-      res.status(201);
-      //res.json(name, email, picture);
-      res.json(ticket.getPayload());
-    } catch (err) {
-      console.log("Error: ", err);
-    }
+  .get("/populateregistry", (req, res) => {
+    handlers.getRegistryEntries(req, res, "BabyApp");
   })
+  
 
   .listen(PORT, () => {
     console.info(`Listening on port ${PORT}`);

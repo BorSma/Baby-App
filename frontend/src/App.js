@@ -10,14 +10,14 @@ import { BabyAppContext } from "./Context/BabyAppContext";
 require("dotenv").config();
 
 const App = () => {
-  const { username } = useContext(BabyAppContext);
+  const { userdata: userdata } = useContext(BabyAppContext);
   const historyInstance = createBrowserHistory();
   return (
     <>
       <Router history={historyInstance}>
         <Wrapper>
           <Header />
-          {username.id !== null ? <Body /> : <p> You're not logged in!</p>}
+          {userdata.name !== null ? <Body /> : <p> You're not logged in!</p>}
           <Footer />
         </Wrapper>
       </Router>

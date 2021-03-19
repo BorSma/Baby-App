@@ -1,8 +1,8 @@
 import Intro from "./Intro";
-import Registry from "./Registry";
+import Registry from "./Registry/";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import styled from "styled-components";
-import Gallery from "./Gallery";
+import Gallery from "./Gallery/";
 
 const Body = () => {
   return (

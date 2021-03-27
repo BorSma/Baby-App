@@ -1,22 +1,14 @@
-import React, { useContext } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
-
-import { BabyAppContext } from "../../Context/BabyAppContext";
+import { useRegistryItems } from "../../Context/RegistryContext";
 import Listing from "./listing";
 
 const Registry = () => {
-  const { fetch, setRegistryItems, registryItems } = useContext(BabyAppContext);
-
-  React.useEffect(() => {
-    loadRegistry();
+  const { registryItems, fetchRegistryItems } = useRegistryItems();
+  useEffect(() => {
+    if (registryItems.length === 0) fetchRegistryItems();
   }, []);
 
-  const loadRegistry = async () => {
-    const data = await fetch("/populateregistry", {
-      method: "GET",
-    });
-    setRegistryItems(data.registryItems);
-  };
   return (
     <>
       <Title>This is the Registry!</Title>

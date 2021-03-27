@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
@@ -8,28 +8,36 @@ import Countdown from "react-countdown";
 const Header = () => {
   const {
     userdata,
+    galleryPageNumber,
     setUserdata,
-    setToken,
     setAccessToken,
     fetch,
-    date,
+    targetDate,
+    fetchTargetDate,
   } = useContext(BabyAppContext);
+
   const HandleLogin = async (googleData) => {
     console.log(`GoogleData`, googleData);
-    setToken(googleData.tokenId);
     setAccessToken(googleData.accessToken);
     const data = await fetch("/api/v1/auth/google", {
       method: "POST",
       body: JSON.stringify({
         token: googleData.tokenId,
-        //token: googleData.accessToken,
       }),
     });
     setUserdata(data);
   };
+
   const responseGoogle = (response) => {
     //console.log(`Here is the Google Profile Obj:${response}`);
   };
+
+  useEffect(() => {
+    if (!targetDate) fetchTargetDate();
+  }, []);
+
+  if (!targetDate) return <p>Loading</p>;
+
   return (
     <>
       <Wrapper>
@@ -37,25 +45,27 @@ const Header = () => {
           <>
             <Navbar>
               <Link to="/">Home</Link>
-              <Link to="/Gallery">Gallery</Link>
+              <Link to={`/gallery/${galleryPageNumber}`}>Gallery</Link>
               <Link to="/Registry">Registry</Link>
+              <Link to="/Admin">Admin</Link>
             </Navbar>
-            <Countdown
-              date={"2021-10-17T00:00:00"}
-              renderer={({ days, hours, minutes, seconds, completed }) => {
-                if (completed) {
-                  return <p>Baby's due date has passed!</p>;
-                } else {
-                  return (
-                    <Timer>
-                      Baby ETA is in: {days} Days, {hours} Hours,{" "}
-                      {minutes} Minutes, {seconds} Seconds
-                    </Timer>
-                  );
-                }
-              }}
-            />
-            <p>{date}</p>
+            <CountdownContainer>
+              <Countdown
+                date={targetDate}
+                renderer={({ days, hours, minutes, seconds, completed }) => {
+                  if (completed) {
+                    return <p>Baby's due date has passed!</p>;
+                  } else {
+                    return (
+                      <Timer>
+                        {days} Days, {hours} Hours, {minutes} Minutes, {seconds}{" "}
+                        Seconds left until: {targetDate}
+                      </Timer>
+                    );
+                  }
+                }}
+              />
+            </CountdownContainer>
           </>
         ) : (
           <p> You are not logged in</p>
@@ -110,6 +120,18 @@ const Navbar = styled.div`
   flex-grow: 3;
 `;
 
+const CountdownContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const DueDate = styled.p`
+  margin: 0px;
+  padding: 0px;
+`;
+
 const Link = styled(NavLink)`
   padding: 20px;
   text-decoration: none;
@@ -130,7 +152,6 @@ const TimerContainer = styled.div`
   align-items: center;
   flex-grow: 1;
 `;
-const Timer = styled.h3`
-`;
+const Timer = styled.h3``;
 
 export default Header;

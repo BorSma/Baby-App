@@ -1,65 +1,102 @@
-import React, { useContext } from "react";
+import { useContext, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { BabyAppContext } from "../../Context/BabyAppContext";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import Photo from "./photo";
+import { useGoogleMedia } from "../../Context/MediaContext";
 
 const Gallery = () => {
-  const {
-    fetch,
-    mediaItems,
-    setMediaItems,
-    setNextPageToken,
-    nextPageToken,
-  } = useContext(BabyAppContext);
+  let history = useHistory();
+  const params = useParams();
+  const { nextPageToken, galleryPageNumber, setGalleryPageNumber } = useContext(
+    BabyAppContext
+  );
+  const { mediaItems, fetchGoogleMedia } = useGoogleMedia();
+  setGalleryPageNumber(parseInt(params.pageNumber) || 1);
 
-  React.useEffect(() => {
-    loadAlbum();
+  const PAGE_SIZE = 4;
+  const firstMediaOfPage = PAGE_SIZE * (galleryPageNumber - 1);
+  const lastMediaOfPage = PAGE_SIZE * galleryPageNumber;
+
+  useEffect(() => {
+    if (mediaItems.length === 0) fetchGoogleMedia();
   }, []);
 
-  const loadAlbum = async () => {
-    const data = await fetch("/populategallery", {
-      method: "POST",
-    });
-    setMediaItems(data.mediaItems);
-    if ((nextPageToken === "")) setNextPageToken(data.nextPageToken);
+  const onClickNextPage = () => {
+    if (galleryPageNumber * PAGE_SIZE >= mediaItems.length) {
+      history.push(`/gallery/${galleryPageNumber}`);
+      fetchGoogleMedia();
+    } else {
+      setGalleryPageNumber(galleryPageNumber + 1);
+      history.push(`/gallery/${galleryPageNumber + 1}`);
+    }
   };
 
+  const onClickPreviousPage = () => {
+    setGalleryPageNumber(galleryPageNumber - 1);
+    history.push(`/gallery/${galleryPageNumber - 1}`);
+  };
+
+  if (mediaItems.length === 0) {
+    return <p>loading</p>;
+  } else if (Math.ceil(mediaItems.length / PAGE_SIZE) < galleryPageNumber) {
+    return (
+      <GalleryList>
+        Page Number {galleryPageNumber} for this album does not exist
+      </GalleryList>
+    );
+  }
   return (
     <>
-      <Title>This is the Gallery!</Title>
-      {mediaItems.length !== 0 ? (
-        <>
-          <Wrapper>
-            {mediaItems.map((img, i) => {
-              return (
-                <li>
-                  <Photo link={img.baseUrl} key={img.id} />
-                </li>
-              );
-            })}
-            <button
-              onClick={async () => {
-                const data = await fetch("/populategallerynextpage", {
-                  method: "POST",
-                });
-                setMediaItems(data.mediaItems);
-                setNextPageToken(data.nextPageToken);
-              }}
-            >
-              Next Page
-            </button>
-          </Wrapper>
-        </>
-      ) : (
-        <p>loading</p>
-      )}
+      <Wrapper>
+        <GalleryList>
+          {mediaItems.slice(firstMediaOfPage, lastMediaOfPage).map((img, i) => {
+            return (
+              <li>
+                <Photo link={img.baseUrl} key={i} />
+              </li>
+            );
+          })}
+        </GalleryList>
+        <ButtonWrapper>
+          <PreviousPage
+            disabled={galleryPageNumber === 1}
+            onClick={onClickPreviousPage}
+          >
+            Previous Page
+          </PreviousPage>
+          <NextPage
+            disabled={
+              galleryPageNumber * PAGE_SIZE >= mediaItems.length &&
+              !nextPageToken
+            }
+            onClick={onClickNextPage}
+          >
+            Next Page
+          </NextPage>
+        </ButtonWrapper>
+      </Wrapper>
     </>
   );
 };
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
-const Wrapper = styled.ul`
+const GalleryList = styled.ul`
   display: flex;
   list-style: none;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
@@ -68,5 +105,9 @@ const Wrapper = styled.ul`
 const Title = styled.h1`
   text-align: center;
 `;
+
+const NextPage = styled.button``;
+
+const PreviousPage = styled.button``;
 
 export default Gallery;

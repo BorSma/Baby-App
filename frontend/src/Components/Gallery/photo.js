@@ -1,16 +1,11 @@
-import React, { useContext } from "react";
 import styled from "styled-components";
-import { BabyAppContext } from "../../Context/BabyAppContext";
 
-const Photo = ({link}) => {
-  const {} = useContext(BabyAppContext);
-
+const Photo = ({ link }) => {
   return (
     <>
-        <ImageContainer>
-          <Img src={link}/>
-        </ImageContainer>
-     
+      <ImageContainer>
+        <Img alt={link} src={link} />
+      </ImageContainer>
     </>
   );
 };

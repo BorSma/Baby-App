@@ -47,6 +47,26 @@ express()
   .get("/populateregistry", (req, res) => {
     handlers.getRegistryEntries(req, res, "BabyApp");
   })
+
+  .post("/addregistryitem", (req, res) => {
+    handlers.addRegistryEntry(req, res, "BabyApp");
+  })
+
+  .delete("/deleteregistryitem", (req, res) => {
+    handlers.deleteRegistryEntry(req, res, "BabyApp");
+  })
+
+  .get("/populatebabyfact", (req, res) => {
+    handlers.getBabyFact(req, res, "BabyApp");
+  })
+
+  .get("/populatetargetdate", (req, res) => {
+    handlers.getTargetDate(req, res, "BabyApp");
+  })
+
+  .put("/updateTargetDate", (req, res) => {
+    handlers.updateTargetDate(req, res, "BabyApp");
+  })
   
 
   .listen(PORT, () => {

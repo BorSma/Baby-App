@@ -1,7 +1,15 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
+import { useRegistryItems } from "../../Context/RegistryContext";
+import { BabyAppContext } from "../../Context/BabyAppContext";
 
 const Listing = ({ msg }) => {
+  const { deleteRegistryItem } = useRegistryItems();
+  const { set_id } = useContext(BabyAppContext);
+  const deleteRegistryEntry = () => {
+    set_id(msg._id);
+    deleteRegistryItem();
+  };
   return (
     <>
       <Wrapper>
@@ -14,6 +22,7 @@ const Listing = ({ msg }) => {
             <h3>{msg.title}</h3>
           </ItemLink>
           <p>{msg.description}</p>
+          <button onClick={deleteRegistryEntry}>Delete</button>
         </ContentsWrapper>
       </Wrapper>
     </>

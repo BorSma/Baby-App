@@ -1,23 +1,22 @@
-import React from "react";
-import moment from "moment";
+import { createContext, useState, useEffect } from "react";
 
-export const BabyAppContext = React.createContext(null);
+export const BabyAppContext = createContext(null);
 
 export const ContextProvider = ({ children }) => {
-  //const date = moment().format("h:mm a - MMM Do, YYYY").subtract(1, 'months'); // January 14th 2021, 6:40:30 pm
-  // //const date = moment().format("h:mm a - MMM Do, YYYY"); // January 14th 2021, 6:40:30 pm
-  // let a = moment();
-  // let b = moment([2021, 10, 17]);
-  // const date = moment(a).to(b).format("h:mm a - MMM Do, YYYY"); // "in a day"
+  const [userdata, setUserdata] = useState({ name: null });
+  const [formData, setFormdata] = useState({});
+  const [targetDate, setTargetDate] = useState();
+  const [targetDateTemp, setTargetDateTemp] = useState();
+  const [_id, set_id] = useState();
+  const [accessToken, setAccessToken] = useState();
+  const [nextPageToken, setNextPageToken] = useState();
+  const [galleryPageNumber, setGalleryPageNumber] = useState(1);
 
-  const [userdata, setUserdata] = React.useState({ name: null });
-  const [token, setToken] = React.useState();
-  const [accessToken, setAccessToken] = React.useState();
-  const [mediaItems, setMediaItems] = React.useState([]);
-  const [registryItems, setRegistryItems] = React.useState([]);
-  const [nextPageToken, setNextPageToken] = React.useState("");
+  const dateFrom = new Date();
+  const dateTo = new Date(targetDate);
+  var monthsLeft = 9 - (dateTo.getMonth() - dateFrom.getMonth());
 
-  React.useEffect(() => {
+  useEffect(() => {
     console.log(userdata);
     if (userdata.name !== null) {
       localStorage.setItem("name", userdata.name);
@@ -26,50 +25,80 @@ export const ContextProvider = ({ children }) => {
     }
   }, [userdata]);
 
-  React.useEffect(() => {
-    console.log(mediaItems);
-  }, [mediaItems]);
-
-  React.useEffect(() => {
-    console.log(registryItems);
-  }, [registryItems]);
-
-  React.useEffect(() => {
-    console.log(`nextPageToken`,nextPageToken);
+  useEffect(() => {
+    console.log(`nextPageToken`, nextPageToken);
   }, [nextPageToken]);
 
   const likeFetch = async (url, options = {}) => {
-    console.log(`nextPageToken`,nextPageToken);
     return fetch(url, {
       ...options,
       headers: {
         "Content-Type": "application/json",
-        //Authorization: token ? `Bearer ${token}` : undefined,
         Authorization: accessToken ? `Bearer ${accessToken}` : undefined,
-        pageToken: nextPageToken ? `${nextPageToken}` : undefined
+        pageToken: nextPageToken ? `${nextPageToken}` : undefined,
+        data: JSON.stringify({ ...formData }),
+        _id: _id,
+        monthsLeft: monthsLeft,
+        targetDate: targetDateTemp,
       },
     }).then((res) => res.json());
   };
-  React.useEffect(() => {
-    //console.log("Token", token);
-    //console.log("Token", accessToken);
-    //likeFetch('/me');
-  }, [token, accessToken]);
+
+  const fetchTargetDate = async () => {
+    const data = await likeFetch("/populatetargetdate", {
+      method: "GET",
+    });
+    setTargetDate(`${data.data.value}`);
+  };
+
+  const updateTargetDate = async () => {
+    await likeFetch("/updateTargetDate", {
+      method: "PUT",
+    });
+    fetchTargetDate();
+  };
+
+  useEffect(() => {
+    console.log("targetDate:", targetDate);
+  }, [targetDate]);
+
+  useEffect(() => {
+    console.log("targetDateTemp:", targetDateTemp);
+  }, [targetDateTemp]);
+
+  // useEffect(() => {
+  //   console.log("Token", accessToken);
+  // }, [token, accessToken]);
+
+  // useEffect(() => {
+  //   console.log("formData", formData);
+  // }, [formData]);
+
+  // useEffect(() => {
+  //   console.log("_id", _id);
+  // }, [_id]);
 
   return (
     <BabyAppContext.Provider
       value={{
         userdata,
-        mediaItems,
-        registryItems,
+        formData,
         nextPageToken,
+        galleryPageNumber,
+        _id,
+        targetDate,
+        targetDateTemp,
+        setTargetDateTemp,
+        setTargetDate,
+        set_id,
+        setGalleryPageNumber,
         setNextPageToken,
-        setRegistryItems,
-        setMediaItems,
         setUserdata,
-        setToken,
         setAccessToken,
+        setFormdata,
+        updateTargetDate,
         fetch: likeFetch,
+        fetchTargetDate,
       }}
     >
       {children}

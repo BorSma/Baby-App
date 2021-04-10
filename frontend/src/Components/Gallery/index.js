@@ -1,3 +1,4 @@
+
 import { useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { BabyAppContext } from "../../Context/BabyAppContext";
@@ -5,22 +6,27 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import Photo from "./photo";
 import { useGoogleMedia } from "../../Context/MediaContext";
+import Loader from "react-loader-spinner";
+import mountain from "../../Assets/mountain.jpg";
 
 const Gallery = () => {
   let history = useHistory();
   const params = useParams();
-  const { nextPageToken, galleryPageNumber, setGalleryPageNumber } = useContext(
-    BabyAppContext
-  );
+  const {
+    nextPageToken,
+    galleryPageNumber,
+    setGalleryPageNumber,
+    albumId,
+  } = useContext(BabyAppContext);
   const { mediaItems, fetchGoogleMedia } = useGoogleMedia();
-  setGalleryPageNumber(parseInt(params.pageNumber) || 1);
 
   const PAGE_SIZE = 4;
   const firstMediaOfPage = PAGE_SIZE * (galleryPageNumber - 1);
   const lastMediaOfPage = PAGE_SIZE * galleryPageNumber;
 
   useEffect(() => {
-    if (mediaItems.length === 0) fetchGoogleMedia();
+    if (mediaItems.length === 0 && albumId !== null) fetchGoogleMedia();
+    setGalleryPageNumber(parseInt(params.pageNumber) || 1);
   }, []);
 
   const onClickNextPage = () => {
@@ -38,44 +44,77 @@ const Gallery = () => {
     history.push(`/gallery/${galleryPageNumber - 1}`);
   };
 
-  if (mediaItems.length === 0) {
-    return <p>loading</p>;
+  if (mediaItems.error) {
+    return <p>Error!</p>;
+  } else if (mediaItems.length === 0) {
+    return (
+      <Wrapper>
+        <LoaderWrapper>
+          <Loader
+            type="Rings"
+            color="#114b5f"
+            height={100}
+            width={100}
+            timeout={10000} //3 secs
+          />
+        </LoaderWrapper>
+      </Wrapper>
+    );
   } else if (Math.ceil(mediaItems.length / PAGE_SIZE) < galleryPageNumber) {
     return (
-      <GalleryList>
-        Page Number {galleryPageNumber} for this album does not exist
-      </GalleryList>
+      <Wrapper>
+        <GalleryListTopRow>
+          Page Number {galleryPageNumber} for this album does not exist
+        </GalleryListTopRow>
+      </Wrapper>
     );
   }
   return (
     <>
       <Wrapper>
-        <GalleryList>
-          {mediaItems.slice(firstMediaOfPage, lastMediaOfPage).map((img, i) => {
-            return (
-              <li>
-                <Photo link={img.baseUrl} key={i} />
-              </li>
-            );
-          })}
-        </GalleryList>
-        <ButtonWrapper>
-          <PreviousPage
-            disabled={galleryPageNumber === 1}
-            onClick={onClickPreviousPage}
-          >
-            Previous Page
-          </PreviousPage>
-          <NextPage
-            disabled={
-              galleryPageNumber * PAGE_SIZE >= mediaItems.length &&
-              !nextPageToken
-            }
-            onClick={onClickNextPage}
-          >
-            Next Page
-          </NextPage>
-        </ButtonWrapper>
+        <GalleryWrapper>
+          <Header>Gallery Page: {galleryPageNumber} </Header>
+
+          <GalleryListTopRow>
+            {mediaItems
+              .slice(firstMediaOfPage, lastMediaOfPage - 2)
+              .map((img, i) => {
+                return (
+                  <li key={i}>
+                    <Photo link={img.baseUrl} />
+                  </li>
+                );
+              })}
+          </GalleryListTopRow>
+          <GalleryListBottomRow>
+            {mediaItems
+              .slice(firstMediaOfPage + 2, lastMediaOfPage)
+              .map((img, i) => {
+                return (
+                  <li key={i}>
+                    <Photo link={img.baseUrl} />
+                  </li>
+                );
+              })}
+          </GalleryListBottomRow>
+          <ButtonWrapper>
+            <Button
+              disabled={galleryPageNumber === 1}
+              onClick={onClickPreviousPage}
+            >
+              Previous Page
+            </Button>
+            <Button
+              disabled={
+                galleryPageNumber * PAGE_SIZE >= mediaItems.length &&
+                !nextPageToken
+              }
+              onClick={onClickNextPage}
+            >
+              Next Page
+            </Button>
+          </ButtonWrapper>
+        </GalleryWrapper>
       </Wrapper>
     </>
   );
@@ -83,11 +122,52 @@ const Gallery = () => {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  background-image: url("${mountain}");
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+`;
+
+const Header = styled.h1`
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: #114b5f;
+  color: #f3e9d2;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 25px;
+`;
+
+const GalleryWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  padding: 20px;
+  background-color: rgb(198, 218, 191, 0.8);
+  align-items: center;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 25px;
+`;
+
+const LoaderWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+`;
+
+const GalleryListTopRow = styled.ul`
+  display: flex;
+  list-style: none;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
 `;
 
-const GalleryList = styled.ul`
+const GalleryListBottomRow = styled.ul`
   display: flex;
   list-style: none;
   flex-wrap: wrap;
@@ -102,12 +182,31 @@ const ButtonWrapper = styled.div`
   align-items: center;
 `;
 
-const Title = styled.h1`
+const Button = styled.button`
+  width: 100px;
+  margin: 20px;
+  background-color: #114b5f; /* Green */
+  color: #f3e9d2;
+  padding: 5px;
   text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 15px;
+  border-color: #f6f4d2;
+  min-width: 150px;
+  outline: none;
+  cursor: pointer;
+  &:hover {
+    background-color: #f3e9d2; /* Green */
+    color: #114b5f;
+  }
+  &:disabled {
+    background-color: #114b5f; /* Green */
+    color: #f3e9d2;
+    cursor: auto;
+  }
 `;
-
-const NextPage = styled.button``;
-
-const PreviousPage = styled.button``;
 
 export default Gallery;

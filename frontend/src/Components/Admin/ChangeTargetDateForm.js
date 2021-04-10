@@ -1,6 +1,8 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import styled from "styled-components";
 import { BabyAppContext } from "../../Context/BabyAppContext";
+
+import Loader from "react-loader-spinner";
 const ChangeTargetDateForm = () => {
   const { targetDate, updateTargetDate, setTargetDateTemp } = useContext(
     BabyAppContext
@@ -27,8 +29,8 @@ const ChangeTargetDateForm = () => {
   const currentyear = new Date().getFullYear().valueOf();
   const years = [];
   j = 0;
-  for (var i = currentyear; i <= currentyear + 5; i++) {
-    years[j] = i;
+  for (var k = currentyear; k <= currentyear + 5; k++) {
+    years[j] = k;
     j++;
   }
 
@@ -58,30 +60,54 @@ const ChangeTargetDateForm = () => {
 
   return (
     <Wrapper>
-      <h3>The current target date is set to: {targetDate}</h3>
+      <Header>Modify due date: </Header>
+      {!targetDate ? (
+        <Loader
+          type="Rings"
+          color="#114b5f"
+          height={50}
+          width={50}
+          timeout={10000} //3 secs
+        />
+      ) : (
+        <Header>Current due date: {targetDate}</Header>
+      )}
+
       <StyledForm onChange={onChange} onSubmit={submitForm}>
         <ContentWrapper>
           <LabelWrapper></LabelWrapper>
           <InputWrapper>
-          <p>Select a new birthday:</p>
-            <select name="day" id="day" onChange={onChangeDay}>
+            <p>Select a new due date:</p>
+            <Selection name="day" id="day" onChange={onChangeDay}>
               <option value="DEFAULT">Select one...</option>
               {days.map((day, i) => {
-                return <option value={day}>{day}</option>;
+                return (
+                  <option value={day} key={i}>
+                    {day}
+                  </option>
+                );
               })}
-            </select>
-            <select name="month" id="month" onChange={onChangeMonth}>
+            </Selection>
+            <Selection name="month" id="month" onChange={onChangeMonth}>
               <option value="DEFAULT">Select one...</option>
               {months.map((month, i) => {
-                return <option value={month}>{month}</option>;
+                return (
+                  <option value={month} key={i}>
+                    {month}
+                  </option>
+                );
               })}
-            </select>
-            <select name="year" id="year" onChange={onChangeYear}>
+            </Selection>
+            <Selection name="year" id="year" onChange={onChangeYear}>
               <option value="DEFAULT">Select one...</option>
               {years.map((year, i) => {
-                return <option value={year}>{year}</option>;
+                return (
+                  <option value={year} key={i}>
+                    {year}
+                  </option>
+                );
               })}
-            </select>
+            </Selection>
           </InputWrapper>
         </ContentWrapper>
         <Submit type="submit" value="Submit" />
@@ -96,15 +122,23 @@ const Wrapper = styled.div`
   border-width: 1px;
   border-style: solid;
   border-radius: 25px;
-  justify-content: center;
   align-items: center;
   margin: 20px;
+  padding: 40px;
+  margin-top: 40px;
+  padding-top: 0px;
+`;
+
+const Header = styled.h2`
+  margin-top: 20px;
+  color: #114b5f;
 `;
 
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: #114b5f;
 `;
 
 const ContentWrapper = styled.div`
@@ -124,25 +158,40 @@ const InputWrapper = styled.div`
   justify-content: space-evenly;
 `;
 
-const Input = styled.input`
-  width: 400px;
-  height: 30px;
-  border-radius: 25px;
+const Selection = styled.select`
+  margin: 10px;
+  padding: 5px;
+  border-width: 1px;
   border-style: solid;
+  border-radius: 25px;
   outline: none;
-  margin: 10px;
-  padding: 2px;
-`;
-
-const Label = styled.p`
-  margin: 10px;
 `;
 
 const Submit = styled.input`
   width: 100px;
-  height: 30px;
-  outline: none;
   margin: 20px;
+  background-color: #114b5f; /* Green */
+  color: #f3e9d2;
+  padding: 5px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 15px;
+  border-color: #f6f4d2;
+  min-width: 150px;
+  outline: none;
+  cursor: pointer;
+  &:hover {
+    background-color: #f3e9d2; /* Green */
+    color: #114b5f;
+  }
+  &:disabled {
+    background-color: #114b5f; /* Green */
+    color: #f3e9d2;
+    cursor: auto;
+  }
 `;
 
 export default ChangeTargetDateForm;

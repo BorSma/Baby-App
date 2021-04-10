@@ -38,11 +38,28 @@ express()
     "/api/v1/auth/google",
     handlers.authorizeGoogle,
     handlers.isAuthenticated,
-    handlers.userInfo
+    handlers.userInfo,
+    handlers.getUserDetails,
+    handlers.addUserdb
   )
-  .get("/me", handlers.isAuthenticated, handlers.userInfo)
+  .get(
+    "/me",
+    handlers.isAuthenticated,
+    handlers.userInfo,
+    handlers.getUserDetails
+  )
+
+  .get("/getAlbumId", (req, res) => {
+    handlers.getAlbumId(req, res, "BabyApp");
+  })
+
   .post("/populategallery", handlers.isAuthenticated, handlers.getPhotos)
-  .post("/populategallerynextpage", handlers.isAuthenticated, handlers.getPhotosNextPage)
+
+  .post(
+    "/populategallerynextpage",
+    handlers.isAuthenticated,
+    handlers.getPhotosNextPage
+  )
 
   .get("/populateregistry", (req, res) => {
     handlers.getRegistryEntries(req, res, "BabyApp");
@@ -56,6 +73,14 @@ express()
     handlers.deleteRegistryEntry(req, res, "BabyApp");
   })
 
+  .put("/buyregistryitem", (req, res) => {
+    handlers.buyRegistryEntry(req, res, "BabyApp");
+  })
+
+  .put("/unbuyregistryitem", (req, res) => {
+    handlers.unbuyRegistryEntry(req, res, "BabyApp");
+  })
+
   .get("/populatebabyfact", (req, res) => {
     handlers.getBabyFact(req, res, "BabyApp");
   })
@@ -67,7 +92,6 @@ express()
   .put("/updateTargetDate", (req, res) => {
     handlers.updateTargetDate(req, res, "BabyApp");
   })
-  
 
   .listen(PORT, () => {
     console.info(`Listening on port ${PORT}`);

@@ -16,9 +16,8 @@ const ImageContainer = styled.div`
   align-items: center;
   margin: 5px;
   border-style: solid;
-  border-color: black;
   border-radius: 35px;
-  border-width: 2px;
+  border-width: 1px;
 `;
 
 const Img = styled.img`

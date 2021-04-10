@@ -2,8 +2,29 @@ import { useState, useContext } from "react";
 import { BabyAppContext } from "./BabyAppContext";
 
 export const useGoogleMedia = () => {
-  const { fetch, setNextPageToken } = useContext(BabyAppContext);
+  const { fetch, setNextPageToken, setAlbumId, albumId } = useContext(
+    BabyAppContext
+  );
   const [mediaItems, setMediaItems] = useState([]);
+
+  const getAlbumId = async () => {
+    //let data = {};
+    if (localStorage.getItem("albumId") && !albumId) {
+      setAlbumId(localStorage.getItem("albumId"));
+    } else {
+      let data = await fetch("/getAlbumId", {
+        method: "GET",
+      });
+      console.log("data", data);
+      if (data.sharedAlbums) {
+        const albums = data.sharedAlbums.filter((album, i) => {
+          return album.title === "Test Share Album" && album.id;
+        });
+        setAlbumId(albums[0].id);
+        localStorage.setItem("albumId", albums[0].id);
+      }
+    }
+  };
 
   const fetchGoogleMedia = async () => {
     if (mediaItems.length === 0) {
@@ -35,5 +56,6 @@ export const useGoogleMedia = () => {
   return {
     mediaItems,
     fetchGoogleMedia,
+    getAlbumId,
   };
 };

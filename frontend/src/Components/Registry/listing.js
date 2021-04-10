@@ -1,29 +1,74 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import styled from "styled-components";
-import { useRegistryItems } from "../../Context/RegistryContext";
 import { BabyAppContext } from "../../Context/BabyAppContext";
 
 const Listing = ({ msg }) => {
-  const { deleteRegistryItem } = useRegistryItems();
-  const { set_id } = useContext(BabyAppContext);
+  const { set_id, userdata, status, setStatus } = useContext(BabyAppContext);
+
+  useEffect(() => {
+    setStatus("idle");
+  }, [status]);
+
   const deleteRegistryEntry = () => {
-    set_id(msg._id);
-    deleteRegistryItem();
+    set_id({ _id: msg._id, action: "delete" });
+    setStatus("refresh");
   };
+
+  const buyRegistryEntry = () => {
+    set_id({ _id: msg._id, action: "buy" });
+    setStatus("refresh");
+  };
+
+  const unbuyRegistryEntry = () => {
+    set_id({ _id: msg._id, action: "unbuy" });
+    setStatus("refresh");
+  };
+
   return (
     <>
       <Wrapper>
-        <ImgWrapper>
-          <img alt={msg.title} src={msg.photo}></img>
-        </ImgWrapper>
+        <ItemLink href={msg.url}>
+          <Title>{msg.title}</Title>
+        </ItemLink>
 
-        <ContentsWrapper>
+        <PhotoWrapper>
           <ItemLink href={msg.url}>
-            <h3>{msg.title}</h3>
+            <Photo alt={msg.title} src={msg.photo}></Photo>
           </ItemLink>
-          <p>{msg.description}</p>
-          <button onClick={deleteRegistryEntry}>Delete</button>
-        </ContentsWrapper>
+        </PhotoWrapper>
+        {/* <Description>{msg.description}</Description> */}
+        {userdata.role === "admin" ? (
+          <>
+            <Description>Bought: {msg.bought}</Description>
+            <Description>Buyer: {msg.buyer}</Description>
+          </>
+        ) : (
+          <></>
+        )}
+        <ButtonContainer>
+          {userdata.role === "admin" ? (
+            <>
+              <Button onClick={deleteRegistryEntry}>Delete</Button>
+              {/* <Button onClick={buyRegistryEntry} disabled={!msg.bought}> */}
+              <Button
+                onClick={buyRegistryEntry}
+                disabled={msg.bought === "true"}
+              >
+                Mark as Bought
+              </Button>
+              <Button
+                onClick={unbuyRegistryEntry}
+                disabled={msg.bought === "false"}
+              >
+                Mark as not Bought
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button onClick={buyRegistryEntry}>Mark as Bought</Button>
+            </>
+          )}
+        </ButtonContainer>
       </Wrapper>
     </>
   );
@@ -31,27 +76,86 @@ const Listing = ({ msg }) => {
 
 const Wrapper = styled.ul`
   display: flex;
+  flex-direction: column;
   list-style: none;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
+  padding: 20px;
   margin: 20px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 25px;
+  width: 550px;
+  @media (max-width: 500px) {
+    width: 100%;
+    padding: 2px;
+    margin: 2px;
+  }
 `;
 
-const ImgWrapper = styled.div`
+const Title = styled.h3`
+  margin: 10px;
+  color: #114b5f;
+`;
+
+const Description = styled.p`
+  margin: 10px;
+  color: #114b5f;
+`;
+
+const PhotoWrapper = styled.div`
   display: flex;
   flex-grow: 1;
-  padding-right: 40px;
+  align-items: center;
 `;
 
-const ContentsWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 3;
+const Photo = styled.img`
+  width: 200px;
+  height: 200px;
+  margin: 10px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 100%;
 `;
 
 const ItemLink = styled.a`
   text-decoration: none;
   outline: none;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  @media (max-width: 500px) {
+    flex-direction: column;
+  }
+`;
+
+const Button = styled.button`
+  width: 100px;
+  margin: 20px;
+  background-color: #114b5f; /* Green */
+  color: #f3e9d2;
+  padding: 5px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 15px;
+  border-color: #f6f4d2;
+  min-width: 150px;
+  outline: none;
+  cursor: pointer;
+  &:hover {
+    background-color: #f3e9d2; /* Green */
+    color: #114b5f;
+  }
+  &:disabled {
+    background-color: #114b5f; /* Green */
+    color: #f3e9d2;
+    cursor: auto;
+  }
 `;
 
 export default Listing;

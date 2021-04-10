@@ -1,9 +1,10 @@
 import Intro from "./Intro/index";
 import Registry from "./Registry/";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import styled from "styled-components";
 import Gallery from "./Gallery/";
 import Admin from "./Admin";
+import BabyFact from "./BabyFact/";
 
 const Body = () => {
   return (
@@ -19,6 +20,9 @@ const Body = () => {
           <Route exact path="/registry">
             <Registry />
           </Route>
+          <Route exact path="/babyfact">
+            <BabyFact />
+          </Route>
           <Route exact path="/admin">
             <Admin />
           </Route>
@@ -28,6 +32,7 @@ const Body = () => {
   );
 };
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+`;
 
 export default Body;

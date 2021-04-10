@@ -9,14 +9,12 @@ const handleLogin = (googleData) => {
     method: "POST",
     body: JSON.stringify({
       token: googleData.tokenId,
-      //token: googleData.accessToken,
     }),
     headers: {
       "Content-Type": "application/json",
     },
   });
   const data = await res.json();
-  //console.log(data);
 };
 
 const Header = () => {

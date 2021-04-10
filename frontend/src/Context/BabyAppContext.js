@@ -32,14 +32,22 @@ export const ContextProvider = ({ children }) => {
     setStatus("loaded");
   }, [userdata]);
 
+  useEffect(() => {
+    if (localStorage.getItem("accessToken")) {
+      setAccessToken(localStorage.getItem("accessToken"));
+    }
+  }, [accessToken]);
+
   const likeFetch = async (url, options = {}) => {
     return fetch(url, {
       ...options,
       headers: {
         "Content-Type": "application/json",
-        Authorization: accessToken, //? `Bearer ${accessToken}` : undefined,
-        pageToken: nextPageToken ? `${nextPageToken}` : undefined,
-        data: JSON.stringify({ ...formData }),
+        //Authorization: accessToken ? `Bearer ${accessToken}` : undefined,
+        Authorization: `Bearer ${accessToken}`,
+        //pageToken: nextPageToken ? `${nextPageToken}` : undefined,
+        pageToken: `${nextPageToken}`,
+        data: JSON.stringify({ ...formData, bought: "false" }),
         _id: _id._id,
         monthsLeft: monthsLeft,
         targetDate: targetDateTemp,
@@ -55,12 +63,9 @@ export const ContextProvider = ({ children }) => {
     });
     const newTargetDate = `${data.data.value}`;
     setTargetDate(newTargetDate);
-    var months = (
-      9 -
-      (new Date(newTargetDate).getMonth() - new Date().getMonth())
-    );
+    var months =
+      9 - (new Date(newTargetDate).getMonth() - new Date().getMonth());
     setMonthsLeft(months);
-
   };
 
   const updateTargetDate = async () => {

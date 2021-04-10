@@ -128,13 +128,13 @@ async function getAlbumId(req, res) {
     console.log(response.data);
     res.status(200).json(response.data);
   } catch (err) {
-    console.log(err.message);
+    console.log(err);
     res.status(400).json({ error: err.message });
   }
 }
 
 async function getPhotos(req, res) {
-  console.log(`req.headers.albumId`, req.headers);
+  console.log(`getPhotos`, req.headers);
   try {
     const url = "https://photoslibrary.googleapis.com/v1/mediaItems:search";
     const response = await axios({
@@ -146,9 +146,7 @@ async function getPhotos(req, res) {
       },
       data: {
         pageSize: "25",
-        albumId:
-          //"AHnwMrg1jdh_WV9THujBnHA3ifNd37GuLswIXsvu_Hewitns6csjxgKtKozDpeq8ujH6gZaNas2I",
-          `${req.headers.albumid}`,
+        albumId: `${req.headers.albumid}`,
       },
     });
     res.status(200).json(response.data);
@@ -264,10 +262,7 @@ const unbuyRegistryEntry = async (req, res, dbName) => {
     const id = new ObjectID(req.headers._id.valueOf());
     const result = await db
       .collection("registry")
-      .updateOne(
-        { _id: id },
-        { $set: { bought: "false", buyer: "" } }
-      );
+      .updateOne({ _id: id }, { $set: { bought: "false", buyer: "" } });
     res.status(200).json({ status: 200 });
     client.close();
   } catch (err) {

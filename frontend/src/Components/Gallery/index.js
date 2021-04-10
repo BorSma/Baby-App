@@ -1,4 +1,3 @@
-
 import { useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { BabyAppContext } from "../../Context/BabyAppContext";
@@ -18,13 +17,17 @@ const Gallery = () => {
     setGalleryPageNumber,
     albumId,
   } = useContext(BabyAppContext);
-  const { mediaItems, fetchGoogleMedia } = useGoogleMedia();
+  const { mediaItems, fetchGoogleMedia, getAlbumId } = useGoogleMedia();
 
   const PAGE_SIZE = 4;
   const firstMediaOfPage = PAGE_SIZE * (galleryPageNumber - 1);
   const lastMediaOfPage = PAGE_SIZE * galleryPageNumber;
 
   useEffect(() => {
+    if (albumId.includes("Error")) {
+      console.log("Calling getAlbumId");
+      getAlbumId();
+    }
     if (mediaItems.length === 0 && albumId !== null) fetchGoogleMedia();
     setGalleryPageNumber(parseInt(params.pageNumber) || 1);
   }, []);
@@ -44,8 +47,20 @@ const Gallery = () => {
     history.push(`/gallery/${galleryPageNumber - 1}`);
   };
 
-  if (mediaItems.error) {
-    return <p>Error!</p>;
+  if (albumId.includes("Error")) {
+    return (
+      <Wrapper>
+        <GalleryWrapper>
+          <Header>Error {albumId[1]}.</Header>
+        </GalleryWrapper>
+      </Wrapper>
+    );
+  } else if (mediaItems.error) {
+    return (
+      <Wrapper>
+        <Header>Error {mediaItems.error}. Try logging in and out again!</Header>
+      </Wrapper>
+    );
   } else if (mediaItems.length === 0) {
     return (
       <Wrapper>
@@ -74,7 +89,6 @@ const Gallery = () => {
       <Wrapper>
         <GalleryWrapper>
           <Header>Gallery Page: {galleryPageNumber} </Header>
-
           <GalleryListTopRow>
             {mediaItems
               .slice(firstMediaOfPage, lastMediaOfPage - 2)

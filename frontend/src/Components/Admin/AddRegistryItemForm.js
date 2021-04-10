@@ -56,13 +56,13 @@ const AddRegistryItemForm = () => {
               <Label>Product Photo URL:</Label>
             </LabelWrapper>
             <InputWrapper>
-              <Input type="text" onChange={onChangeURL} value={url} />
               <Input type="text" onChange={onChangeTitle} value={title} />
               <Input
                 type="text"
                 onChange={onChangeDescription}
                 value={description}
               />
+              <Input type="text" onChange={onChangeURL} value={url} />
               <Input type="text" onChange={onChangePhoto} value={photo} />
             </InputWrapper>
           </ContentWrapper>

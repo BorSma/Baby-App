@@ -1,5 +1,4 @@
 import { useState, useContext, useEffect } from "react";
-import { useOnChange } from "../hooks/useOnChange";
 import { BabyAppContext } from "./BabyAppContext";
 
 export const useBabyFacts = () => {
@@ -20,14 +19,14 @@ export const useBabyFacts = () => {
 
   useEffect(() => {
     if (monthsLeft > 0 && !babyFact.status) {
-      console.log(babyFact);
+      //console.log(babyFact);
       fetchBabyFact();
     }
   }, [monthsLeft]);
 
   useEffect(() => {
     if (loading && babyFact.data) {
-      console.log(babyFact);
+      //console.log(babyFact);
       setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

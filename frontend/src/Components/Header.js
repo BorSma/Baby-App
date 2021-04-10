@@ -7,13 +7,8 @@ import { BabyAppContext } from "../Context/BabyAppContext";
 import Countdown from "react-countdown";
 import { useGoogleMedia } from "../Context/MediaContext";
 import Loader from "react-loader-spinner";
-import {
-  RiHome2Line,
-  RiShoppingCartLine,
-  RiInformationLine,
-  RiStore2Line,
-  RiQuestionAnswerLine,
-} from "react-icons/ri";
+
+import { useHistory } from "react-router-dom";
 
 import { ImWrench } from "react-icons/im";
 
@@ -33,13 +28,16 @@ const Header = () => {
     fetch,
     albumId,
     targetDate,
-    fetchTargetDate,
   } = useContext(BabyAppContext);
 
   const { getAlbumId } = useGoogleMedia();
+  let history = useHistory();
 
   useEffect(() => {
-    if (userdata.name !== null && albumId === null) {
+    if (
+      userdata.name !== null &&
+      (albumId === null || albumId.includes("Error"))
+    ) {
       console.log("Calling getAlbumId");
       getAlbumId();
     }
@@ -48,6 +46,7 @@ const Header = () => {
   const HandleLogin = async (googleData) => {
     console.log(`GoogleData`, googleData);
     setAccessToken(googleData.accessToken);
+    localStorage.setItem("accessToken", googleData.accessToken);
     const data = await fetch("/api/v1/auth/google", {
       method: "POST",
       body: JSON.stringify({
@@ -120,12 +119,7 @@ const Header = () => {
                     if (completed) {
                       return <p>Baby's due date has passed!</p>;
                     } else {
-                      return (
-                        <Timer>
-                          {/* {days}:{hours}:{minutes}:{seconds} until due date:{" "} */}
-                          {days} Days Until Due Date!
-                        </Timer>
-                      );
+                      return <Timer>{days} Days Until Due Date!</Timer>;
                     }
                   }}
                 />
@@ -165,6 +159,7 @@ const Header = () => {
               onLogoutSuccess={() => {
                 setUserdata({ name: null });
                 localStorage.clear();
+                history.push(`/`);
               }}
               disabled={userdata.name === null}
             />

@@ -6,12 +6,15 @@ const express = require("express");
 const cors = require("cors");
 const axios = require("axios");
 const bodyParser = require("body-parser");
-const session = require("express-session");
-
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const morgan = require("morgan");
 
 const PORT = 8000;
 const handlers = require("./handlers");
+
+const MONGO_URI = `mongodb+srv://user1:${process.env.MongoURI}@cluster0.7qjdc.mongodb.net/BabyApp?retryWrites=true&w=majority`;
+
 express()
   .use(function (req, res, next) {
     res.header(
@@ -26,15 +29,22 @@ express()
   })
   .use(morgan("tiny"))
   .use(bodyParser.json())
-  .use(cors({origin: "https://determined-meninsky-6de7d1.netlify.app"}))
-  .use(
-    session({
-      secret: "keyboard cat",
-      resave: false,
-      saveUninitialized: true,
-      cookie: { secure: true },
-    })
-  )
+  .use(cors({ origin: "https://determined-meninsky-6de7d1.netlify.app" }))
+  // .use(
+  //   session({
+  //     secret: "keyboard cat",
+  //     resave: false,
+  //     saveUninitialized: true,
+  //     cookie: { secure: true },
+  //   })
+  // )
+  .use(session({
+    secret: 'foo',
+    store: MongoStore.create({ mongoUrl: MONGO_URI }),
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true },
+  }))
 
   .use(
     "/api/v1/auth/google",

@@ -93,6 +93,6 @@ express()
     handlers.updateTargetDate(req, res, "BabyApp");
   })
 
-  .listen(PORT, () => {
+  .listen(process.env.PORT || 8000, () => {
     console.info(`Listening on port ${PORT}`);
   });

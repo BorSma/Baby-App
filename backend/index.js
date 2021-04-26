@@ -26,7 +26,7 @@ express()
   })
   .use(morgan("tiny"))
   .use(bodyParser.json())
-  .use(cors({origin: "http://localhost:3000/"}))
+  .use(cors({origin: "http://localhost:3000"}))
   .use(
     session({
       secret: "keyboard cat",

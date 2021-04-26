@@ -26,7 +26,7 @@ express()
   })
   .use(morgan("tiny"))
   .use(bodyParser.json())
-  .use(cors({origin: "http://localhost:3000"}))
+  .use(cors({origin: "https://determined-meninsky-6de7d1.netlify.app"}))
   .use(
     session({
       secret: "keyboard cat",

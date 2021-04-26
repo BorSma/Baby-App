@@ -40,7 +40,7 @@ export const ContextProvider = ({ children }) => {
   }, [accessToken]);
 
   const likeFetch = async (url, options = {}) => {
-    return fetch(url, {
+    return fetch("https://babyapp2021.herokuapp.com"+url, {
       ...options,
       headers: {
         "Content-Type": "application/json",

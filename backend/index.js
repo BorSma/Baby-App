@@ -3,6 +3,7 @@ require("dotenv").config();
 ("use strict");
 
 const express = require("express");
+const cors = require("cors");
 const axios = require("axios");
 const bodyParser = require("body-parser");
 const session = require("express-session");
@@ -25,6 +26,7 @@ express()
   })
   .use(morgan("tiny"))
   .use(bodyParser.json())
+  .use(cors({origin: "http://localhost:3000/"}))
   .use(
     session({
       secret: "keyboard cat",

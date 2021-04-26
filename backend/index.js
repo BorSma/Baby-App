@@ -42,6 +42,9 @@ express()
     handlers.getUserDetails,
     handlers.addUserdb
   )
+  .get('/', (req, res) => {
+    res.send('Well, hello there. It seems things are in order!')
+  })
   .get(
     "/me",
     handlers.isAuthenticated,

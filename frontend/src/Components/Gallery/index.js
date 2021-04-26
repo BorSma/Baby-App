@@ -30,6 +30,7 @@ const Gallery = () => {
     }
     if (mediaItems.length === 0 && albumId !== null) fetchGoogleMedia();
     setGalleryPageNumber(parseInt(params.pageNumber) || 1);
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onClickNextPage = () => {

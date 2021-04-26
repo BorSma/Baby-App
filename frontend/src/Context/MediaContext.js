@@ -6,8 +6,6 @@ export const useGoogleMedia = () => {
     fetch,
     setNextPageToken,
     setAlbumId,
-    albumId,
-    accessToken,
   } = useContext(BabyAppContext);
   const [mediaItems, setMediaItems] = useState([]);
 

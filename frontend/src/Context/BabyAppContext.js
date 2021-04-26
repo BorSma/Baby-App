@@ -30,6 +30,7 @@ export const ContextProvider = ({ children }) => {
       localStorage.setItem("role", userdata.role);
     }
     setStatus("loaded");
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userdata]);
 
   useEffect(() => {
@@ -77,6 +78,7 @@ export const ContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (!targetDate) fetchTargetDate();
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <BabyAppContext.Provider

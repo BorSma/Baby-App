@@ -4,7 +4,7 @@ import { BabyAppContext } from "./BabyAppContext";
 
 export const useRegistryItems = () => {
   const [registryItems, setRegistryItems] = useState({});
-  const { fetch, _id, set_id } = useContext(BabyAppContext);
+  const { fetch, _id } = useContext(BabyAppContext);
 
   useEffect(() => {
     if (_id && _id.action === "buy") {

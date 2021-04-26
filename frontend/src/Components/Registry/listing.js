@@ -7,6 +7,7 @@ const Listing = ({ msg }) => {
 
   useEffect(() => {
     setStatus("idle");
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
   const deleteRegistryEntry = () => {

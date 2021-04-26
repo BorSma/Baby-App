@@ -39,7 +39,9 @@ express()
   //   })
   // )
   .use(session({
-    secret: 'foo',
+    crypto: {
+      secret: 'squirrel'
+    },
     store: MongoStore.create({ mongoUrl: MONGO_URI }),
     resave: false,
     saveUninitialized: true,

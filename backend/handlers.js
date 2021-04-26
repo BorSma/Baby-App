@@ -14,9 +14,10 @@ const options = {
 };
 
 const oAuth2Client = new OAuth2Client(
-  keys.web.client_id || process.env.client_id,
-  keys.web.client_secret || process.env.client_secret,
-  keys.web.redirect_uris[0] || process.env.redirect_uris[0]
+  //keys.web
+  process.env.client_id,
+  process.env.client_secret,
+  process.env.redirect_uris[0]
 );
 
 const authorizeGoogle = async (req, res, next) => {
@@ -49,7 +50,8 @@ async function userInfo(req, res, next) {
   try {
     const ticket = await oAuth2Client.verifyIdToken({
       idToken: req.session.token,
-      audience: keys.web.client_id || process.env.client_id,
+      audience: process.env.client_id,
+      //audience: keys.web.client_id
     });
     const payload = ticket.getPayload();
     req.session.email = payload.email;

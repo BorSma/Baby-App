@@ -29,7 +29,7 @@ express()
   })
   .use(morgan("tiny"))
   .use(bodyParser.json())
-  .use(cors({ origin: "https://banya2021.netlify.app/" }))
+  .use(cors({ origin: "https://banya2021.netlify.app" }))
   // .use(
   //   session({
   //     secret: "keyboard cat",

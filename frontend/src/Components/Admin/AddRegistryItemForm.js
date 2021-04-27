@@ -12,8 +12,10 @@ const AddRegistryItemForm = () => {
   const [photo, setPhoto] = useState("");
 
   const submitForm = (event) => {
+    event.preventDefault();
     addRegistryItem();
     fetchRegistryItems();
+    
   };
   const onChangeURL = (event) => {
     setUrl(event.target.value);

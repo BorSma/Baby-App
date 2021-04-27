@@ -39,6 +39,7 @@ const ChangeTargetDateForm = () => {
   const [inputYear, setinputYear] = useState(years[0]);
 
   const submitForm = (event) => {
+    event.preventDefault();
     updateTargetDate();
   };
 

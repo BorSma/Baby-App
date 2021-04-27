@@ -1,13 +1,16 @@
 import React, { useContext, useEffect } from "react";
 import styled from "styled-components";
 import { BabyAppContext } from "../../Context/BabyAppContext";
+import {
+  IoMdTrash
+} from "react-icons/io";
 
 const Listing = ({ msg }) => {
   const { set_id, userdata, status, setStatus } = useContext(BabyAppContext);
 
   useEffect(() => {
     setStatus("idle");
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
   const deleteRegistryEntry = () => {
@@ -49,8 +52,7 @@ const Listing = ({ msg }) => {
         <ButtonContainer>
           {userdata.role === "admin" ? (
             <>
-              <Button onClick={deleteRegistryEntry}>Delete</Button>
-              {/* <Button onClick={buyRegistryEntry} disabled={!msg.bought}> */}
+              <Button onClick={deleteRegistryEntry}><IoMdTrash size="25" /></Button>
               <Button
                 onClick={buyRegistryEntry}
                 disabled={msg.bought === "true"}

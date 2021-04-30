@@ -38,13 +38,13 @@ const Header = () => {
       userdata.name !== null &&
       (albumId === null || albumId.includes("Error"))
     ) {
-      console.log("Calling getAlbumId");
+      // console.log("Calling getAlbumId");
       getAlbumId();
     }
   }, [userdata]);
 
   const HandleLogin = async (googleData) => {
-    console.log(`GoogleData`, googleData);
+    // console.log(`GoogleData`, googleData);
     setAccessToken(googleData.accessToken);
     localStorage.setItem("accessToken", googleData.accessToken);
     const data = await fetch("/api/v1/auth/google", {
@@ -214,7 +214,7 @@ const CountdownContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 30%;
+  width: 20%;
   //flex-grow: 1;
   color: #114b5f;
   @media (max-width: 1500px) {

@@ -5,6 +5,7 @@ import styled from "styled-components";
 import Gallery from "./Gallery/";
 import Admin from "./Admin";
 import BabyFact from "./BabyFact/";
+import ErrorPage from "./ErrorPage/"
 
 const Body = () => {
   return (
@@ -25,6 +26,9 @@ const Body = () => {
           </Route>
           <Route exact path="/admin">
             <Admin />
+          </Route>
+          <Route path="*">
+            <ErrorPage />
           </Route>
         </Switch>
       </Wrapper>

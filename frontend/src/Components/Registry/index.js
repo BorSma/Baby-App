@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import styled from "styled-components";
 import { useRegistryItems } from "../../Context/RegistryContext";
 import Listing from "./listing";
@@ -7,32 +7,60 @@ import Loader from "react-loader-spinner";
 import { BabyAppContext } from "../../Context/BabyAppContext";
 import mountain from "../../Assets/mountain.jpg";
 
+import AddModal from "./AddModal";
+import Dialog from "@material-ui/core/Dialog";
+import {
+  IoMdTrash, IoMdCreate, IoMdEye, IoMdGift, IoMdAddCircleOutline
+} from "react-icons/io";
+
 const Registry = () => {
   const { registryItems, fetchRegistryItems } = useRegistryItems();
   const { userdata, status, setStatus } = useContext(BabyAppContext);
 
+  const [openAddModal, setOpenAddModal] = useState(false);
+
   useEffect(() => {
     fetchRegistryItems();
     setStatus("idle");
-    console.log(registryItems);
+    // console.log(registryItems);
   }, []);
 
   useEffect(() => {
     fetchRegistryItems();
   }, [status]);
 
+  const handleOpenAddModal = () => {
+    setOpenAddModal(true);
+  };
+
+  const handleCloseAddModal = () => {
+    setOpenAddModal(false);
+  };
+
   if (registryItems.hasOwnProperty("status")) {
     if (registryItems.status === 201 && userdata.role === "admin") {
       return (
         <Wrapper>
+          <Dialog
+            open={openAddModal}
+            onClose={handleCloseAddModal}
+            aria-labelledby="simple-modal-title"
+            aria-describedby="simple-modal-description"
+          >
+            <AddModal handleClose={handleCloseAddModal}></AddModal>
+
+          </Dialog>
           <RegistryWrapper>
             <Header>Registry</Header>
             <Text>
               We'd be happy to take pre-loved baby items. If you would like to
               support us, you can check out our registry below. Please click the
               "Bought" button for the item once purchased to remove it from the
-              list. 
-            </Text>
+              list.
+            </Text><RegistryItemsContainer>
+              <Button onClick={handleOpenAddModal} title="Add Registry Item"><IoMdAddCircleOutline size="25" />
+              </Button>
+            </RegistryItemsContainer>
             <RegistryItemsContainer>
               {registryItems.registryItems.map((registryItem, i) => {
                 return (
@@ -157,6 +185,33 @@ const Text = styled.p`
   padding: 10px;
   font-size: 20px;
   color: #114b5f;
+`;
+
+const Button = styled.button`
+  width: 50px;
+  margin: 20px;
+  background-color: #114b5f; /* Green */
+  color: #f3e9d2;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 15px;
+  border-color: #f6f4d2;
+  min-width: 60px;
+  outline: none;
+  cursor: pointer;
+  &:hover {
+    background-color: #f3e9d2; /* Green */
+    color: #114b5f;
+  }
+  &:disabled {
+    background-color: #114b5f; /* Green */
+    color: #f3e9d2;
+    cursor: auto;
+  }
 `;
 
 export default Registry;

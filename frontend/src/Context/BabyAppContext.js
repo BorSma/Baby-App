@@ -30,7 +30,7 @@ export const ContextProvider = ({ children }) => {
       localStorage.setItem("role", userdata.role);
     }
     setStatus("loaded");
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userdata]);
 
   useEffect(() => {
@@ -41,6 +41,7 @@ export const ContextProvider = ({ children }) => {
 
   const likeFetch = async (url, options = {}) => {
     return fetch("https://babyapp2021.herokuapp.com"+url, {
+    //return fetch(url, {
       ...options,
       headers: {
         "Content-Type": "application/json",
@@ -48,7 +49,7 @@ export const ContextProvider = ({ children }) => {
         Authorization: `Bearer ${accessToken}`,
         //pageToken: nextPageToken ? `${nextPageToken}` : undefined,
         pageToken: `${nextPageToken}`,
-        data: JSON.stringify({ ...formData, bought: "false" }),
+        data: JSON.stringify({ ...formData}),
         _id: _id._id,
         monthsLeft: monthsLeft,
         targetDate: targetDateTemp,
@@ -78,7 +79,7 @@ export const ContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (!targetDate) fetchTargetDate();
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <BabyAppContext.Provider

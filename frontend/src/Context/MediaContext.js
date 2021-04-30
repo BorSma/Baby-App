@@ -14,8 +14,6 @@ export const useGoogleMedia = () => {
   }, [mediaItems]);
 
   const getAlbumId = async () => {
-    //let data = {};
-    console.log("Console.log 1");
     if (localStorage.getItem("albumId")) {
       setAlbumId(localStorage.getItem("albumId"));
       console.log("Console.log 2");
@@ -27,7 +25,8 @@ export const useGoogleMedia = () => {
       console.log("Console.log 3");
       if (data.sharedAlbums) {
         const albums = data.sharedAlbums.filter((album, i) => {
-          return album.title === "Test Share Album" && album.id;
+          //return album.title === "Test Share Album" && album.id;
+          return album.id;
         });
         setAlbumId(albums[0].id);
         localStorage.setItem("albumId", albums[0].id);

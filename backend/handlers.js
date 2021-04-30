@@ -74,11 +74,11 @@ async function getUserDetails(req, res, next) {
       .findOne({ email: req.session.email }, (err, result) => {
         result
           ? res.status(200).json({
-              status: 200,
-              data: {
-                ...result,
-              },
-            })
+            status: 200,
+            data: {
+              ...result,
+            },
+          })
           : next();
         client.close();
       });
@@ -256,6 +256,7 @@ const buyRegistryEntry = async (req, res, dbName) => {
   }
 };
 
+
 const unbuyRegistryEntry = async (req, res, dbName) => {
   try {
     const client = await MongoClient(MONGO_URI, options);
@@ -265,6 +266,29 @@ const unbuyRegistryEntry = async (req, res, dbName) => {
     const result = await db
       .collection("registry")
       .updateOne({ _id: id }, { $set: { bought: "false", buyer: "" } });
+    res.status(200).json({ status: 200 });
+    client.close();
+  } catch (err) {
+    res.status(404).json({ status: 404 });
+    console.log("Error: ", err);
+  }
+};
+
+const updateRegistryEntry = async (req, res, dbName) => {
+  console.log("Hello", JSON.parse(req.headers.data));
+  try {
+    const client = await MongoClient(MONGO_URI, options);
+    await client.connect();
+    const db = client.db(dbName);
+    const id = new ObjectID(req.headers._id.valueOf());
+    const result = await db
+      .collection("registry")
+      .updateOne(
+        { _id: id },
+        {
+          $set: JSON.parse(req.headers.data)
+        }
+      );
     res.status(200).json({ status: 200 });
     client.close();
   } catch (err) {
@@ -344,5 +368,6 @@ module.exports = {
   buyRegistryEntry,
   unbuyRegistryEntry,
   deleteRegistryEntry,
+  updateRegistryEntry,
   updateTargetDate,
 };

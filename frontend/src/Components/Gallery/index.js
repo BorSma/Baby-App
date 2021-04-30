@@ -25,7 +25,7 @@ const Gallery = () => {
 
   useEffect(() => {
     if (albumId.includes("Error")) {
-      console.log("Calling getAlbumId");
+      // console.log("Calling getAlbumId");
       getAlbumId();
     }
     if (mediaItems.length === 0 && albumId !== null) fetchGoogleMedia();

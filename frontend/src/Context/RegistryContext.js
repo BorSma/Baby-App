@@ -13,6 +13,9 @@ export const useRegistryItems = () => {
       deleteRegistryItem();
     } else if (_id && _id.action === "unbuy") {
       unbuyRegistryItem();
+    } else if (_id && _id.action === "update") {
+      console.log("Form Submitted Step 2");
+      updateRegistryItem();
     } else console.log("Id updated");
   }, [_id]);
 
@@ -51,6 +54,13 @@ export const useRegistryItems = () => {
     });
   };
 
+  const updateRegistryItem = async () => {
+    console.log("Form Submitted Step 3");
+    await fetch("/updateregistryitem", {
+      method: "PUT",
+    });
+  };
+
   return {
     registryItems,
     fetchRegistryItems,
@@ -58,5 +68,6 @@ export const useRegistryItems = () => {
     deleteRegistryItem,
     buyRegistryItem,
     unbuyRegistryItem,
+    updateRegistryItem,
   };
 };

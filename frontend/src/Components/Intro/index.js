@@ -10,7 +10,7 @@ const Intro = () => {
   const { targetDate } = useContext(BabyAppContext);
   const { babyFact, loading } = useBabyFacts();
 
-  console.log({ babyFact, loading });
+  // console.log({ babyFact, loading });
 
   if (loading) {
     return (

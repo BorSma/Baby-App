@@ -29,15 +29,9 @@ express()
   })
   .use(morgan("tiny"))
   .use(bodyParser.json())
-  .use(cors({ origin: "https://banya2021.netlify.app" }))
-  // .use(
-  //   session({
-  //     secret: "keyboard cat",
-  //     resave: false,
-  //     saveUninitialized: true,
-  //     cookie: { secure: true },
-  //   })
-  // )
+  //.use(cors({ origin: "https://banya2021.netlify.app" }))
+  .use(cors({ origin: "http://localhost:3000" }))
+
   .use(session({
     secret: 'squirrel',
     store: MongoStore.create({ mongoUrl: MONGO_URI }),
@@ -94,6 +88,10 @@ express()
 
   .put("/unbuyregistryitem", (req, res) => {
     handlers.unbuyRegistryEntry(req, res, "BabyApp");
+  })
+
+  .put("/updateregistryitem", (req, res) => {
+    handlers.updateRegistryEntry(req, res, "BabyApp");
   })
 
   .get("/populatebabyfact", (req, res) => {

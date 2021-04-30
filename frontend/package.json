@@ -2,8 +2,9 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://babyapp2021.herokuapp.com",
+  "proxy": "http://localhost:8000/",
   "dependencies": {
+    "@material-ui/core": "^4.11.4",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -15,6 +16,7 @@
     "react-google-login": "^5.2.2",
     "react-icons": "^4.2.0",
     "react-loader-spinner": "^4.0.0",
+    "react-modal": "^3.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "styled-components": "^5.2.1",

@@ -10,7 +10,7 @@ import mountain from "../../Assets/mountain.jpg";
 import AddModal from "./AddModal";
 import Dialog from "@material-ui/core/Dialog";
 import {
-  IoMdTrash, IoMdCreate, IoMdEye, IoMdGift, IoMdAddCircleOutline
+  IoMdAddCircleOutline
 } from "react-icons/io";
 
 const Registry = () => {

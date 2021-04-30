@@ -6,7 +6,7 @@ import { BabyAppContext } from "../../Context/BabyAppContext";
 
 const AddModal = (handleClose) => {
   const { addRegistryItem, fetchRegistryItems } = useRegistryItems();
-  const { set_id, userdata, status, setStatus, formData, setFormdata } = useContext(BabyAppContext);
+  const { formData, setFormdata } = useContext(BabyAppContext);
   const [url, setUrl] = useState(``);
   const [title, setTitle] = useState(``);
   const [description, setDescription] = useState(``);
@@ -24,6 +24,7 @@ const AddModal = (handleClose) => {
       vendor: vendor,
       price: price
     })
+    /* eslint-disable react-hooks/exhaustive-deps */
   }, []);
 
   const submitForm = (event) => {
@@ -102,29 +103,6 @@ const AddModal = (handleClose) => {
     </StyledForm>)
 };
 
-const Symbol = styled.img`
-  width: 40px;
-  height: 40px;
-  margin: 3px;
-  border-style: none;
-  border-radius: 100%;
-`;
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  border-width: 1px;
-  border-style: solid;
-  border-radius: 50px;
-  padding: 30px;
-  justify-content: center;
-  align-items: center;
-  margin: 20px;
-  margin-top: 40px;
-  @media (max-width: 1300px) {
-    margin: 3px;
-  }
-`;
 
 const StyledForm = styled.form`
   display: flex;

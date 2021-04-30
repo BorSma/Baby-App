@@ -29,8 +29,8 @@ express()
   })
   .use(morgan("tiny"))
   .use(bodyParser.json())
-  //.use(cors({ origin: "https://banya2021.netlify.app" }))
-  .use(cors({ origin: "http://localhost:3000" }))
+  .use(cors({ origin: "https://banya2021.netlify.app" }))
+  //.use(cors({ origin: "http://localhost:3000" }))
 
   .use(session({
     secret: 'squirrel',

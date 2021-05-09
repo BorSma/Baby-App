@@ -28,7 +28,7 @@ const AddModal = (handleClose) => {
   }, []);
 
   const submitForm = (event) => {
-    //event.preventDefault();
+    event.preventDefault();
     addRegistryItem();
     fetchRegistryItems();
     setStatus("refresh");

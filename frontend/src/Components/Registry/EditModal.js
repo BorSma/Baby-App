@@ -26,10 +26,11 @@ const EditModal = ({ msg, handleClose }) => {
   }, []);
 
   const submitForm = (event) => {
+    event.preventDefault();
     set_id({ _id: msg._id, action: "update" });
     setStatus("refresh");
     handleClose();
-    //event.preventDefault();
+    
   };
 
   const onChangeURL = (event) => {

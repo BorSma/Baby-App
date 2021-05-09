@@ -3,15 +3,15 @@ import { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import { BabyAppContext } from "../../Context/BabyAppContext";
 
-const EditModal = ({ msg, handleClose}) => {
-  const { set_id, formData, setFormdata } = useContext(BabyAppContext);
+const EditModal = ({ msg, handleClose }) => {
+  const { set_id, formData, setFormdata, status, setStatus } = useContext(BabyAppContext);
   const [url, setUrl] = useState(`${msg.url}`);
   const [title, setTitle] = useState(`${msg.title}`);
   const [description, setDescription] = useState(`${msg.description}`);
   const [photo, setPhoto] = useState(`${msg.photo}`);
   const [price, setPrice] = useState(`${msg.price}`);
   const [vendor, setVendor] = useState(`${msg.vendor}`);
- 
+
 
   useEffect(() => {
     setFormdata({
@@ -27,8 +27,9 @@ const EditModal = ({ msg, handleClose}) => {
 
   const submitForm = (event) => {
     set_id({ _id: msg._id, action: "update" });
+    setStatus("refresh");
     handleClose();
-    event.preventDefault();
+    //event.preventDefault();
   };
 
   const onChangeURL = (event) => {

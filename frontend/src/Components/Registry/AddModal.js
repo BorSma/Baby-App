@@ -6,7 +6,7 @@ import { BabyAppContext } from "../../Context/BabyAppContext";
 
 const AddModal = (handleClose) => {
   const { addRegistryItem, fetchRegistryItems } = useRegistryItems();
-  const { formData, setFormdata } = useContext(BabyAppContext);
+  const { formData, setFormdata, status, setStatus } = useContext(BabyAppContext);
   const [url, setUrl] = useState(``);
   const [title, setTitle] = useState(``);
   const [description, setDescription] = useState(``);
@@ -28,9 +28,10 @@ const AddModal = (handleClose) => {
   }, []);
 
   const submitForm = (event) => {
-    event.preventDefault();
+    //event.preventDefault();
     addRegistryItem();
     fetchRegistryItems();
+    setStatus("refresh");
   };
   const onChangeURL = (event) => {
     setUrl(event.target.value);

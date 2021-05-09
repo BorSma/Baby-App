@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { BabyAppContext } from "../../Context/BabyAppContext";
 
 const EditModal = ({ msg, handleClose }) => {
-  const { set_id, formData, setFormdata, status, setStatus } = useContext(BabyAppContext);
+  const { set_id, formData, setFormdata, setStatus } = useContext(BabyAppContext);
   const [url, setUrl] = useState(`${msg.url}`);
   const [title, setTitle] = useState(`${msg.title}`);
   const [description, setDescription] = useState(`${msg.description}`);

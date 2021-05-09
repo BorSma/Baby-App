@@ -6,7 +6,7 @@ import { BabyAppContext } from "../../Context/BabyAppContext";
 
 const AddModal = (handleClose) => {
   const { addRegistryItem, fetchRegistryItems } = useRegistryItems();
-  const { formData, setFormdata, status, setStatus } = useContext(BabyAppContext);
+  const { formData, setFormdata, setStatus } = useContext(BabyAppContext);
   const [url, setUrl] = useState(``);
   const [title, setTitle] = useState(``);
   const [description, setDescription] = useState(``);

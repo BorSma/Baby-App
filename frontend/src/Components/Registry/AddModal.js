@@ -32,6 +32,7 @@ const AddModal = (handleClose) => {
     addRegistryItem();
     fetchRegistryItems();
     setStatus("refresh");
+    handleClose();
   };
   const onChangeURL = (event) => {
     setUrl(event.target.value);

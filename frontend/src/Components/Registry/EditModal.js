@@ -30,7 +30,6 @@ const EditModal = ({ msg, handleClose }) => {
     set_id({ _id: msg._id, action: "update" });
     setStatus("refresh");
     handleClose();
-    
   };
 
   const onChangeURL = (event) => {

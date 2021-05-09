@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useRegistryItems } from "../../Context/RegistryContext";
 import { BabyAppContext } from "../../Context/BabyAppContext";
 
-const AddModal = (handleClose) => {
+const AddModal = ({handleClose}) => {
   const { addRegistryItem, fetchRegistryItems } = useRegistryItems();
   const { formData, setFormdata, setStatus } = useContext(BabyAppContext);
   const [url, setUrl] = useState(``);
@@ -28,11 +28,11 @@ const AddModal = (handleClose) => {
   }, []);
 
   const submitForm = (event) => {
+    handleClose();
     event.preventDefault();
     addRegistryItem();
     fetchRegistryItems();
     setStatus("refresh");
-    handleClose();
   };
   const onChangeURL = (event) => {
     setUrl(event.target.value);

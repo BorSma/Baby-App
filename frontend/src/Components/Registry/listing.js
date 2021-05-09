@@ -127,8 +127,7 @@ const Listing = ({ msg }) => {
             </>
           ) : (
             <>
-              <Button onClick={buyRegistryEntry}
-                disabled={msg.bought === "true"} title="Mark as Bought"><IoMdGift size="25" /></Button>
+              <Button onClick={handleOpenGiftModal} disabled={msg.bought === "true"} title="Mark as Bought"><IoMdGift size="25" /></Button>
             </>
           )}
         </ButtonContainer>

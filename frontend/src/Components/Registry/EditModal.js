@@ -1,11 +1,9 @@
 import React from "react";
 import { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
-//import { useRegistryItems } from "../../Context/RegistryContext";
 import { BabyAppContext } from "../../Context/BabyAppContext";
 
 const EditModal = ({ msg }, handleClose) => {
-  //const { updateRegistryItem, fetchRegistryItems } = useRegistryItems();
   const { set_id, formData, setFormdata } = useContext(BabyAppContext);
   const [url, setUrl] = useState(`${msg.url}`);
   const [title, setTitle] = useState(`${msg.title}`);
@@ -13,7 +11,7 @@ const EditModal = ({ msg }, handleClose) => {
   const [photo, setPhoto] = useState(`${msg.photo}`);
   const [price, setPrice] = useState(`${msg.price}`);
   const [vendor, setVendor] = useState(`${msg.vendor}`);
-
+ 
 
   useEffect(() => {
     setFormdata({
@@ -28,13 +26,11 @@ const EditModal = ({ msg }, handleClose) => {
   }, []);
 
   const submitForm = (event) => {
-    set_id({ _id: msg._id, action: "update" });
-    //setStatus("refresh");
-    handleClose();
-    // updateRegistryItem();
-    // fetchRegistryItems();
     event.preventDefault();
+    set_id({ _id: msg._id, action: "update" });
+    handleClose();
   };
+
   const onChangeURL = (event) => {
     setUrl(event.target.value);
     setFormdata({
@@ -42,6 +38,7 @@ const EditModal = ({ msg }, handleClose) => {
       url: event.target.value,
     });
   };
+
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
     setFormdata({
@@ -81,6 +78,15 @@ const EditModal = ({ msg }, handleClose) => {
   return (
     <StyledForm if="form" name="form" onSubmit={submitForm}>
       <ContentWrapper>
+        {/* <Dialog
+          open={openGiftModal}
+          onClose={handleCloseGiftModal}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+        >
+          <GiftModal handleSubmit={submitForm} handleClose={handleCloseGiftModal}></GiftModal>
+
+        </Dialog> */}
         <LabelWrapper>
           <Label>Title:</Label>
           <Label>Description:</Label>
@@ -102,11 +108,10 @@ const EditModal = ({ msg }, handleClose) => {
           <Input type="text" onChange={onChangePrice} value={price} />
         </InputWrapper>
       </ContentWrapper>
+      {/* <Button onClick={handleOpenGiftModal} title="Submit">Submit</Button> */}
       <Submit type="submit" value="Submit" />
     </StyledForm>)
 };
-
-
 
 const StyledForm = styled.form`
   display: flex;
@@ -178,5 +183,32 @@ const Submit = styled.input`
     cursor: auto;
   }
 `;
+
+// const Button = styled.button`
+//   width: 100px;
+//   margin: 20px;
+//   background-color: #114b5f; /* Green */
+//   color: #f3e9d2;
+//   padding: 10px;
+//   text-align: center;
+//   text-decoration: none;
+//   font-size: 16px;
+//   border-width: 1px;
+//   border-style: solid;
+//   border-radius: 15px;
+//   border-color: #f6f4d2;
+//   min-width: 60px;
+//   outline: none;
+//   cursor: pointer;
+//   &:hover {
+//     background-color: #f3e9d2; /* Green */
+//     color: #114b5f;
+//   }
+//   &:disabled {
+//     background-color: #114b5f; /* Green */
+//     color: #f3e9d2;
+//     cursor: auto;
+//   }
+// `;
 
 export default EditModal;

@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import React from "react";
 import AddRegistryItemForm from "./AddRegistryItemForm";
 import ChangeTargetDateForm from "./ChangeTargetDateForm";
 import mountain from "../../Assets/mountain.jpg";
 
 const Admin = () => {
+  
   return (
     <>
       <Wrapper>

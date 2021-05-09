@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { BabyAppContext } from "../../Context/BabyAppContext";
 import {
@@ -7,12 +7,23 @@ import {
 import Logo from "./logo";
 import EditModal from "./EditModal";
 import Dialog from "@material-ui/core/Dialog";
-
+import GiftModal from "./GiftModal";
+import GarbageModal from "../Registry/GarbageModal";
 
 const Listing = ({ msg }) => {
   const { set_id, userdata, status, setStatus } = useContext(BabyAppContext);
 
-  const [openEditModal, setOpenEditModal] = React.useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [openGiftModal, setOpenGiftModal] = useState(false);
+  const [openGarbageModal, setOpenGarbageModal] = useState(false);
+
+  const handleOpenGiftModal = () => {
+    setOpenGiftModal(true);
+  };
+
+  const handleCloseGiftModal = () => {
+    setOpenGiftModal(false);
+  };
 
   const handleOpenEditModal = () => {
     setOpenEditModal(true);
@@ -22,7 +33,13 @@ const Listing = ({ msg }) => {
     setOpenEditModal(false);
   };
 
+  const handleOpenGarbageModal = () => {
+    setOpenGarbageModal(true);
+  };
 
+  const handleCloseGarbageModal = () => {
+    setOpenGarbageModal(false);
+  };
 
   useEffect(() => {
     setStatus("idle");
@@ -32,11 +49,13 @@ const Listing = ({ msg }) => {
   const deleteRegistryEntry = () => {
     set_id({ _id: msg._id, action: "delete" });
     setStatus("refresh");
+    handleCloseGarbageModal();
   };
 
   const buyRegistryEntry = () => {
     set_id({ _id: msg._id, action: "buy" });
     setStatus("refresh");
+    handleCloseGiftModal();
   };
 
   const unbuyRegistryEntry = () => {
@@ -52,9 +71,28 @@ const Listing = ({ msg }) => {
           onClose={handleCloseEditModal}
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
+          animation={false}
         >
-          <EditModal msg={msg} handleClose></EditModal>
+          <EditModal msg={msg} handleClose={handleCloseEditModal}></EditModal>
 
+        </Dialog>
+        <Dialog
+          open={openGiftModal}
+          onClose={handleCloseGiftModal}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+          animation={false}
+        >
+          <GiftModal buyRegistryEntry={buyRegistryEntry} handleClose={handleCloseGiftModal}></GiftModal>
+        </Dialog>
+        <Dialog
+          open={openGarbageModal}
+          onClose={handleCloseGarbageModal}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+          animation={false}
+        >
+          <GarbageModal deleteRegistryEntry={deleteRegistryEntry} handleClose={handleCloseGiftModal}></GarbageModal>
         </Dialog>
         <ItemLink href={msg.url}>
           <Title>{msg.title}</Title>
@@ -82,9 +120,8 @@ const Listing = ({ msg }) => {
           {userdata.role === "admin" ? (
             <>
               <Button onClick={handleOpenEditModal} title="Edit Registry Item"><IoMdCreate size="25" /></Button>
-              <Button onClick={deleteRegistryEntry} title="Delete Registry Item"><IoMdTrash size="25" /></Button>
-              <Button onClick={buyRegistryEntry}
-                disabled={msg.bought === "true"} title="Mark as Bought"><IoMdGift size="25" /></Button>
+              <Button onClick={handleOpenGarbageModal} title="Delete Registry Item"><IoMdTrash size="25" /></Button>
+              <Button onClick={handleOpenGiftModal} disabled={msg.bought === "true"} title="Mark as Bought"><IoMdGift size="25" /></Button>
               <Button onClick={unbuyRegistryEntry}
                 disabled={msg.bought === "false"} title="Mark Visible to Guests"><IoMdEye size="25" /></Button>
             </>

@@ -9,14 +9,11 @@ import mountain from "../../Assets/mountain.jpg";
 
 import AddModal from "./AddModal";
 import Dialog from "@material-ui/core/Dialog";
-import {
-  IoMdAddCircleOutline
-} from "react-icons/io";
+import { IoMdAddCircleOutline } from "react-icons/io";
 
 const Registry = () => {
   const { registryItems, fetchRegistryItems } = useRegistryItems();
   const { userdata, status, setStatus } = useContext(BabyAppContext);
-
   const [openAddModal, setOpenAddModal] = useState(false);
 
   useEffect(() => {
@@ -57,10 +54,11 @@ const Registry = () => {
               support us, you can check out our registry below. Please click the
               "Bought" button for the item once purchased to remove it from the
               list.
-            </Text><RegistryItemsContainer>
+            </Text><AddItemWrapper>
+              <Title>Add Registry Item</Title>
               <Button onClick={handleOpenAddModal} title="Add Registry Item"><IoMdAddCircleOutline size="25" />
               </Button>
-            </RegistryItemsContainer>
+            </AddItemWrapper>
             <RegistryItemsContainer>
               {registryItems.registryItems.map((registryItem, i) => {
                 return (
@@ -156,6 +154,26 @@ const RegistryWrapper = styled.div`
   }
 `;
 
+const AddItemWrapper = styled.ul`
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  justify-content: center;
+  background-color: #f0f4ef;
+  align-items: center;
+  padding: 20px;
+  margin: 20px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 25px;
+  width: 550px;
+  @media (max-width: 500px) {
+    width: 100%;
+    padding: 2px;
+    margin: 2px;
+  }
+`;
+
 const RegistryItemsContainer = styled.ul`
   display: flex;
   flex-direction: column;
@@ -178,6 +196,11 @@ const Header = styled.h1`
   border-width: 1px;
   border-style: solid;
   border-radius: 25px;
+`;
+
+const Title = styled.h3`
+  margin: 10px;
+  color: #114b5f;
 `;
 
 const Text = styled.p`

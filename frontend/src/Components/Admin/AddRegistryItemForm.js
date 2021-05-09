@@ -3,6 +3,9 @@ import styled from "styled-components";
 import { useRegistryItems } from "../../Context/RegistryContext";
 import { BabyAppContext } from "../../Context/BabyAppContext";
 
+import StatusModal from "../Admin/StatusModal";
+import Dialog from "@material-ui/core/Dialog";
+
 const AddRegistryItemForm = () => {
   const { addRegistryItem, fetchRegistryItems } = useRegistryItems();
   const { formData, setFormdata } = useContext(BabyAppContext);
@@ -10,12 +13,24 @@ const AddRegistryItemForm = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [photo, setPhoto] = useState("");
+  const [openStatusModal, setOpenStatusModal] = useState(false);
 
+  const handleOpenStatusModal = () => {
+    setOpenStatusModal(true);
+  };
+
+  const handleCloseStatusModal = () => {
+    setOpenStatusModal(false);
+  };
   const submitForm = (event) => {
     event.preventDefault();
     addRegistryItem();
     fetchRegistryItems();
-    
+    setUrl("");
+    setTitle("");
+    setDescription("");
+    setPhoto("");
+    handleOpenStatusModal();
   };
   const onChangeURL = (event) => {
     setUrl(event.target.value);
@@ -48,6 +63,15 @@ const AddRegistryItemForm = () => {
   return (
     <>
       <Wrapper>
+        <Dialog
+          open={openStatusModal}
+          onClose={handleCloseStatusModal}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+        >
+          <StatusModal handleClose={handleCloseStatusModal}></StatusModal>
+
+        </Dialog>
         <Header>Submit Registry Item:</Header>
         <StyledForm if="form" name="form" onSubmit={submitForm}>
           <ContentWrapper>

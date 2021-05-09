@@ -3,7 +3,7 @@ import { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import { BabyAppContext } from "../../Context/BabyAppContext";
 
-const EditModal = ({ msg }, handleClose) => {
+const EditModal = ({ msg, handleClose}) => {
   const { set_id, formData, setFormdata } = useContext(BabyAppContext);
   const [url, setUrl] = useState(`${msg.url}`);
   const [title, setTitle] = useState(`${msg.title}`);
@@ -26,9 +26,9 @@ const EditModal = ({ msg }, handleClose) => {
   }, []);
 
   const submitForm = (event) => {
-    event.preventDefault();
     set_id({ _id: msg._id, action: "update" });
     handleClose();
+    event.preventDefault();
   };
 
   const onChangeURL = (event) => {
@@ -78,15 +78,6 @@ const EditModal = ({ msg }, handleClose) => {
   return (
     <StyledForm if="form" name="form" onSubmit={submitForm}>
       <ContentWrapper>
-        {/* <Dialog
-          open={openGiftModal}
-          onClose={handleCloseGiftModal}
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
-        >
-          <GiftModal handleSubmit={submitForm} handleClose={handleCloseGiftModal}></GiftModal>
-
-        </Dialog> */}
         <LabelWrapper>
           <Label>Title:</Label>
           <Label>Description:</Label>
@@ -108,7 +99,6 @@ const EditModal = ({ msg }, handleClose) => {
           <Input type="text" onChange={onChangePrice} value={price} />
         </InputWrapper>
       </ContentWrapper>
-      {/* <Button onClick={handleOpenGiftModal} title="Submit">Submit</Button> */}
       <Submit type="submit" value="Submit" />
     </StyledForm>)
 };

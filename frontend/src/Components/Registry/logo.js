@@ -3,6 +3,7 @@ import styled from "styled-components";
 import amazon from "../../Assets/amazon.jpg";
 import well from "../../Assets/well.jpg";
 import ikea from "../../Assets/ikea.jpg"
+import tradle from "../../Assets/tradle.jpg"
 import {
   IoMdCart
 } from "react-icons/io";
@@ -10,11 +11,13 @@ import {
 
 const Logo = ({ vendor }) => {
   if (vendor === "amazon")
-    return (<Symbol alt={vendor} src={amazon} title="Amazon.ca"></Symbol>)
+    return (<Symbol alt={vendor} src={amazon} title="Amazon"></Symbol>)
   else if (vendor === "well")
-    return (<Symbol alt={vendor} src={well} title="Well.ca"></Symbol>)
+    return (<Symbol alt={vendor} src={well} title="Well"></Symbol>)
   else if (vendor === "ikea")
-    return (<Symbol alt={vendor} src={ikea} title="Ikea.ca"></Symbol>)
+    return (<Symbol alt={vendor} src={ikea} title="Ikea"></Symbol>)
+    else if (vendor === "tradle")
+    return (<Symbol alt={vendor} src={tradle} title="Tradle"></Symbol>)
   else return (<IoMdCart size="25" />)
 };
 

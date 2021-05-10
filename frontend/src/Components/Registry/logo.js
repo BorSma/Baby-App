@@ -2,8 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import amazon from "../../Assets/amazon.jpg";
 import well from "../../Assets/well.jpg";
-import ikea from "../../Assets/ikea.jpg"
-import tradle from "../../Assets/tradle.jpg"
+import ikea from "../../Assets/ikea.jpg";
+import tradle from "../../Assets/tradle.jpg";
+import giftedtype from "../../Assets/giftedtype.jpg";
 import {
   IoMdCart
 } from "react-icons/io";
@@ -16,8 +17,10 @@ const Logo = ({ vendor }) => {
     return (<Symbol alt={vendor} src={well} title="Well"></Symbol>)
   else if (vendor === "ikea")
     return (<Symbol alt={vendor} src={ikea} title="Ikea"></Symbol>)
-    else if (vendor === "tradle")
+  else if (vendor === "tradle")
     return (<Symbol alt={vendor} src={tradle} title="Tradle"></Symbol>)
+  else if (vendor === "giftedtype")
+    return (<Symbol alt={vendor} src={tradle} title="GiftedType"></Symbol>)
   else return (<IoMdCart size="25" />)
 };
 

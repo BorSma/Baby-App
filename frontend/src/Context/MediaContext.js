@@ -22,7 +22,8 @@ export const useGoogleMedia = () => {
       });
       if (data.sharedAlbums) {
         const albums = data.sharedAlbums.filter((album, i) => {
-          return album.title === "Banya 2021" && album.id;
+          if (album.title === "Banya 2021")
+            return album.id;
           //return album.id;
         });
         setAlbumId(albums[0].id);

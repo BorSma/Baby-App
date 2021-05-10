@@ -20,7 +20,7 @@ const Logo = ({ vendor }) => {
   else if (vendor === "tradle")
     return (<Symbol alt={vendor} src={tradle} title="Tradle"></Symbol>)
   else if (vendor === "giftedtype")
-    return (<Symbol alt={vendor} src={tradle} title="GiftedType"></Symbol>)
+    return (<Symbol alt={vendor} src={giftedtype} title="GiftedType"></Symbol>)
   else return (<IoMdCart size="25" />)
 };
 

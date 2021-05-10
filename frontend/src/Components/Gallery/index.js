@@ -25,7 +25,6 @@ const Gallery = () => {
 
   useEffect(() => {
     if (albumId.includes("Error")) {
-      // console.log("Calling getAlbumId");
       getAlbumId();
     }
     if (mediaItems.length === 0 && albumId !== null) fetchGoogleMedia();
@@ -85,7 +84,7 @@ const Gallery = () => {
       </Wrapper>
     );
   }
-  return (
+  else return (
     <>
       <Wrapper>
         <GalleryWrapper>

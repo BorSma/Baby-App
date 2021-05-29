@@ -40,10 +40,11 @@ I have two types of users: admins and regular users. The difference being is tha
 Here is what the admin user sees when he opens up the registry:
 <p align="center"><img alt="Registry Section" src="./frontend/src/Assets/ReadMeSnapshot7.jpg"></p>
 <p align="center"><img alt="Registry Item Example" src="./frontend/src/Assets/ReadMeSnapshot8.JPG"></p>
-Below are the examples of the modals where I'm using [Material UI Dialog API](https://material-ui.com/api/dialog/).
-<p align="center"><img alt="Edit Registry Item Example" src="./frontend/src/Assets/ReadMeSnapshot9.JPG"></p>
-<p align="center"><img alt="Delete Registry Item Example" src="./frontend/src/Assets/ReadMeSnapshot10.JPG"></p>
-<p align="center"><img alt="Gift Registry Item Example" src="./frontend/src/Assets/ReadMeSnapshot11.JPG"></p>
+
+Below are the examples of the modals where I'm using [Material UI Dialog API](https://material-ui.com/api/dialog/):
+<p align="center"><img alt="Edit Registry Item Example" src="./frontend/src/Assets/ReadMeSnapshot9.JPG">
+<img alt="Delete Registry Item Example" src="./frontend/src/Assets/ReadMeSnapshot10.JPG">
+<img alt="Gift Registry Item Example" src="./frontend/src/Assets/ReadMeSnapshot11.JPG"></p>
 
 ## Admin Console
 The admin console was my first iteration at adding Registry Items. I realized it would be more convenient to have the editing features right on the items itself. However, I left the options here for user preference. There is also an option here to change the due date if we ever have another baby!

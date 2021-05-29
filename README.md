@@ -14,20 +14,21 @@ Since I didn't want any Joe looking at my baby registry, I've used the [React Go
 ## Navigation Bar
 The navigation bar at the top allows the user to navigate easily whether they are on the desktop or on mobile versions of the website.
 ### Desktop
-<p align="center"><img alt="Navigation Bar Desktop" src="./frontend/src/Assets/ReadMeSnapshot3.JPG"></p>
+<p align="center"><img alt="Navigation Bar Desktop" src="./frontend/src/Assets/ReadMeSnapshot3.jpg"></p>
+
 ### Mobile
 <p align="center"><img alt="Navigation Bar Mobile" src="./frontend/src/Assets/ReadMeSnapshot4.JPG"></p>
 
 ## Baby Fact
 If you're interested in what stage of development the baby is at currently there is a "Baby Fact" section.
-<p align="center"><img alt="Baby Fact Example" src="./frontend/src/Assets/ReadMeSnapshot5.JPG"></p>
+<p align="center"><img alt="Baby Fact Example" src="./frontend/src/Assets/ReadMeSnapshot5.jpg"></p>
 
 ## Photo Gallery
 I am using the [Google Photos API](https://developers.google.com/photos) to bring in photos from an album that I've shared to authorized users. This Google Photos API was a little challenging to figure out. Some of the challenges I encountered were:
 * The Google Photos Album ID is different for every authorized user even though the album is the same.
 * I had to figure out how to do pagination. I managed to do this on the frontend side.
 * This was good practice in understanding access tokens.
-<p align="center"><img alt="Photo Gallery Example" src="./frontend/src/Assets/ReadMeSnapshot6.JPG"></p>
+<p align="center"><img alt="Photo Gallery Example" src="./frontend/src/Assets/ReadMeSnapshot6.jpg"></p>
 
 ## User Types
 I have two types of users: admins and regular users. The difference being is that regular users can only view the registry and mark items bought (remove them from the list) whereas admins have the ability to:
@@ -37,7 +38,7 @@ I have two types of users: admins and regular users. The difference being is tha
 
 ## Registry (Admin)
 Here is what the admin user sees when he opens up the registry:
-<p align="center"><img alt="Registry Section" src="./frontend/src/Assets/ReadMeSnapshot7.JPG"></p>
+<p align="center"><img alt="Registry Section" src="./frontend/src/Assets/ReadMeSnapshot7.jpg"></p>
 <p align="center"><img alt="Registry Item Example" src="./frontend/src/Assets/ReadMeSnapshot8.JPG"></p>
 Below are the examples of the modals where I'm using [Material UI Dialog API](https://material-ui.com/api/dialog/).
 <p align="center"><img alt="Edit Registry Item Example" src="./frontend/src/Assets/ReadMeSnapshot9.JPG"></p>

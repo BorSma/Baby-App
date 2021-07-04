@@ -79,7 +79,7 @@ const Registry = () => {
           <RegistryWrapper>
             <Header>Registry</Header>
             <Text>
-              If you are interested in gifting us baby items we made a baby registry on <Link style={{ textDecoration: 'none', color: '#114b5f' }} to="https://www.babylist.com/baby-anya-marion">BabyList</Link>
+              If you are interested in gifting us baby items we made a baby registry on <Link style={{ textDecoration: 'none', color: '#114b5f', fontWeight: 'bold' }} to="https://www.babylist.com/baby-anya-marion">BabyList</Link>
               .
               We will happily accept (and actually prefer) pre-loved baby items.
               As far as delivery goes, feel free to reach out and we can arrange a time to meet or, if you prefer,

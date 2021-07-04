@@ -90,7 +90,7 @@ const Gallery = () => {
       <Wrapper>
         <GalleryWrapper>
           <Header>Gallery Page: {galleryPageNumber} </Header>
-          <Text>Photos and videos also accessible through: <Link style={{ textDecoration: 'none', color: '#114b5f' }} to="https://photos.google.com">Google Photos</Link></Text>
+          <Text>Photos and videos also accessible through: <Link style={{ textDecoration: 'none', color: '#114b5f', fontWeight: 'bold' }} to="https://photos.google.com">Google Photos</Link></Text>
           <GalleryListTopRow>
             {mediaItems
               .slice(firstMediaOfPage, lastMediaOfPage - 2)

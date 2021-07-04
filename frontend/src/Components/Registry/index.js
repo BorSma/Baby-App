@@ -79,11 +79,11 @@ const Registry = () => {
           <RegistryWrapper>
             <Header>Registry</Header>
             <Text>
-              We are happy to take pre-loved baby items. Another way to support
-              us is choosing an item from our wishlist. To help us avoid
-              duplicates, please click the "Bought" button to take it off the
-              list. (Hint: The photo and title links to a store where you can
-              buy the item).
+              If you are interested in gifting us baby items we made a baby registry on <Link style={{ textDecoration: 'none', color: '#114b5f' }} to="https://www.babylist.com/baby-anya-marion">BabyList</Link>
+              .
+              We will happily accept (and actually prefer) pre-loved baby items.
+              As far as delivery goes, feel free to reach out and we can arrange a time to meet or, if you prefer,
+              you can send gifts directly to our home. Thank you!
             </Text>
             <RegistryItemsContainer>
               {registryItems.registryItems.map((registryItem, i) => {

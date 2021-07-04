@@ -4,6 +4,7 @@ import { BabyAppContext } from "../../Context/BabyAppContext";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import Photo from "./photo";
+import { Link } from "react-router-dom";
 import { useGoogleMedia } from "../../Context/MediaContext";
 import Loader from "react-loader-spinner";
 import mountain from "../../Assets/mountain.jpg";
@@ -152,6 +153,13 @@ const Header = styled.h1`
   border-width: 1px;
   border-style: solid;
   border-radius: 25px;
+`;
+
+const Text = styled.p`
+  text-align: left;
+  padding: 10px;
+  font-size: 20px;
+  color: #114b5f;
 `;
 
 const GalleryWrapper = styled.div`

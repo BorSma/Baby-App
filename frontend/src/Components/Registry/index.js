@@ -50,10 +50,11 @@ const Registry = () => {
           <RegistryWrapper>
             <Header>Registry</Header>
             <Text>
-              We'd be happy to take pre-loved baby items. If you would like to
-              support us, you can check out our registry below. Please click the
-              "Bought" button for the item once purchased to remove it from the
-              list.
+              If you are interested in gifting us baby items we made a baby registry on <Link to="https://www.babylist.com/baby-anya-marion">BabyList</Link>
+              .
+              We will happily accept (and actually prefer) pre-loved baby items.
+              As far as delivery goes, feel free to reach out and we can arrange a time to meet or, if you prefer, 
+              you can send gifts directly to our home. Thank you!
             </Text><AddItemWrapper>
               <Title>Add Registry Item</Title>
               <Button onClick={handleOpenAddModal} title="Add Registry Item"><IoMdAddCircleOutline size="25" />

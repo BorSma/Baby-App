@@ -57,7 +57,7 @@ const Intro = () => {
             </Text>
             <Text>
               But we would like to share our journey with you as we welcome our
-              baby aka "Nugget".
+              baby aka "Baby Banya". Our little one did want show us all the 'details' at the ultrasound, so the sex of the baby will be a surprise.
             </Text>
             <Text>
               Check out the baby facts and the photo album. We will add stuff
